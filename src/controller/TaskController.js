@@ -18,12 +18,39 @@ class TaskController {
     async update(req, res) {
         await TaskModel.findByIdAndUpdate({ '_id': req.params.id }, req.body, { new: true })
             .then(response => {
-                return res.status(200).json({ response });
+                return res.status(200).json(response);
             })
             .catch(error => {
-                return res.status(500).json({ error });
+                return res.status(500).json(error);
         })
     }
+
+    async all(req, res) {
+        await TaskModel.find({ macaddress: { '$in': req.body.macaddress } })
+            .sort('when')
+            .then(response => {
+                return res.status(200).json({ response });
+            })
+            .catch(error => { 
+                return res.status(500).json(error);
+            });
+    } 
+    
+    async show(req, res) {
+        await TaskModel.findById(req.params.id)
+            .then(response => {
+                if (response) {
+                    return res.status(200).json(response);
+                }
+                else {
+                    return res.status(404).json({ error: 'Task not found!!' });
+                }             
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+        })
+    }
+   
 };
 
 module.exports = new TaskController();

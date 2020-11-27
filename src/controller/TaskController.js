@@ -61,6 +61,21 @@ class TaskController {
                 return res.status(500).json(error);
             })
     }
+
+    async done(req, res) {
+        await TaskModel.findByIdAndUpdate(
+            { '_id': req.params.id },
+            { 'done': req.params.done },
+            { new: true }
+        )
+            .then(response => {
+                return res.status(200).json(response);
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+            })
+
+    }
    
 };
 

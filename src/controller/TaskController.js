@@ -1,5 +1,14 @@
 const TaskModel = require('../model/TaskModel');
-const {startOfDay, endOfDay } = require('date-fns');
+const {
+    startOfDay,
+    endOfDay,
+    startOfWeek,
+    endOfWeek,
+    startOfMonth,
+    endOfMonth,
+    startOfYear,
+    endOfYear,
+} = require('date-fns');
 
 const currentTime = new Date();
 
@@ -101,6 +110,36 @@ class TaskController {
             .find({
                 'macaddress': { '$in': req.body.macaddress },
                 'when': { '$gte': startOfDay(currentTime), '$lte': endOfDay(currentTime) }
+            })
+            .sort('when')
+            .then(response => {
+                return res.status(200).json(response);
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+            });
+    }
+
+    async week(req, res) {
+        await TaskModel
+            .find({
+                'macaddress': { '$in': req.body.macaddress },
+                'when': { '$gte': startOfWeek(currentTime), '$lte': endOfWeek(currentTime) }
+            })
+            .sort('when')
+            .then(response => {
+                return res.status(200).json(response);
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+            });
+    }
+
+    async month(req, res) {
+        await TaskModel
+            .find({
+                'macaddress': { '$in': req.body.macaddress },
+                'when': { '$gte': startOfMonth(currentTime), '$lte': endOfMonth(currentTime) }
             })
             .sort('when')
             .then(response => {

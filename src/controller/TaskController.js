@@ -1,4 +1,5 @@
 const TaskModel = require('../model/TaskModel');
+const {startOfDay, endOfDay } = require('date-fns');
 
 const currentTime = new Date();
 
@@ -85,6 +86,21 @@ class TaskController {
             .find({
                 'when': { '$lt': currentTime },
                 'macaddress': { '$in': req.body.macaddress }
+            })
+            .sort('when')
+            .then(response => {
+                return res.status(200).json(response);
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+            });
+    }
+
+    async today(req, res) {
+        await TaskModel
+            .find({
+                'macaddress': { '$in': req.body.macaddress },
+                'when': { '$gte': startOfDay(currentTime), '$lte': endOfDay(currentTime) }
             })
             .sort('when')
             .then(response => {

@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
+const AuthController = require('../controller/AuthController');
+const authMiddleware = require('../middlewares/auth');
+
 const TaskController = require('../controller/TaskController');
 const TaskValidation = require('../middlewares/TaskValidation');
 const MacaddressValidation = require('../middlewares/MacaddressValidation');
+
+router.post('/signup', AuthController.signup);
+router.post('/login', AuthController.login);
+
+router.use(authMiddleware);
 
 router.post('/', TaskValidation, TaskController.create);
 router.put('/:id', TaskValidation, TaskController.update);

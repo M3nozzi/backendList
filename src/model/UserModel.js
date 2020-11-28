@@ -25,16 +25,10 @@ const userSchema = new Schema(
             select: false, 
         },
         googleID: String,
-        path: String,
-        createdAt: {
+        created: {
             type: Date,
-            default: Date.now,
-        },
-
-        updateAt: {
-            type: Date,
-            default: Date.now,
-        },
+            default: Date.now(),
+        }
     }
 );
 

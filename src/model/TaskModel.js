@@ -31,7 +31,11 @@ const TaskSchema = new Schema({
     created: {
         type: Date,
         default: Date.now(),
-    }
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 });
 
 module.exports = mongoose.model('Task', TaskSchema);

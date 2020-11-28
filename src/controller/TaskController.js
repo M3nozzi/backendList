@@ -67,7 +67,7 @@ class TaskController {
     async delete(req, res) {
         await TaskModel.deleteOne({ '_id': req.params.id })
             .then(response => {
-                return res.status(200).json(response);
+                return res.status(200).json({ message: "Appointment successfully deleted!!!" });
             })
             .catch(error => {
                 return res.status(500).json(error);

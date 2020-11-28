@@ -1,5 +1,7 @@
 const TaskModel = require('../model/TaskModel');
 
+const currentTime = new Date();
+
 class TaskController {
 
     async create(req, res) {
@@ -75,6 +77,22 @@ class TaskController {
                 return res.status(500).json(error);
             })
 
+    }
+
+
+    async late(req, res) {
+        await TaskModel
+            .find({
+                'when': { '$lt': currentTime },
+                'macaddress': { '$in': req.body.macaddress }
+            })
+            .sort('when')
+            .then(response => {
+                return res.status(200).json(response);
+            })
+            .catch(error => {
+                return res.status(500).json(error);
+            });
     }
    
 };

@@ -10,7 +10,7 @@ const TaskValidation = require('../middlewares/TaskValidation');
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
 router.post('/', TaskValidation, TaskController.create);
 router.put('/:id', TaskValidation, TaskController.update);

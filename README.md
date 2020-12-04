@@ -17,4 +17,4 @@ That's the server repository of this project, you can find the frontend reposito
 * jsonwebtoken
 * date-fns
 
-The routes was tested with [Postman](https://www.postman.com/).
+The backend application was tested with [Postman](https://www.postman.com/).
